@@ -7,6 +7,7 @@ import grim_tester
         ('11.10', '19', False),
         ('11.10', '20', True),
         ('11.10', '21', False),
+        ('1133.98', '28', False),
         ('11.09', '21', False)
 ])
 def test_simple_no_rounding(mean, n, expected_consistency):
