@@ -17,9 +17,13 @@ def consistency_check(raw_mean, raw_n, rounding_method=decimal.ROUND_HALF_UP):
 
         dp_of_mean = abs(mean.as_tuple().exponent)
 
-        num_fractions_in_mean = mean//fraction
+        quotient = mean//fraction
         quantize_exp = f"1E-{dp_of_mean}"
 
-        possible_match = (num_fractions_in_mean*fraction).quantize(Decimal(quantize_exp), rounding=rounding_method)
+        base_multiple = quotient*fraction
+        next_multiple = (quotient+1)*fraction
 
-        return possible_match == mean
+        poss_match_1 = base_multiple.quantize(Decimal(quantize_exp), rounding=rounding_method)
+        poss_match_2 = next_multiple.quantize(Decimal(quantize_exp), rounding=rounding_method)
+
+        return mean in [poss_match_1, poss_match_2]
