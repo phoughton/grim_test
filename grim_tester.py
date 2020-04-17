@@ -1,19 +1,25 @@
-from decimal import *
+import decimal
+from decimal import Decimal
 
 
-def consistency_check(raw_mean, raw_n, rounding):
-    if rounding is None:
-        mean = Decimal(raw_mean)
-        n = Decimal(raw_n)
+def consistency_check(raw_mean, raw_n, rounding_method=decimal.ROUND_HALF_UP):
 
-        fraction = 1/n
+    mean = Decimal(raw_mean)
+    n = Decimal(raw_n)
+    fraction = 1 / n
+
+    if rounding_method is None:
 
         remainder = mean % fraction
-
-        print(raw_mean, raw_n, remainder)
-
         return remainder == 0
 
     else:
-        raise Exception("Unsupported, Rounding is not yet supported.")
 
+        dp_of_mean = abs(mean.as_tuple().exponent)
+
+        num_fractions_in_mean = mean//fraction
+        quantize_exp = f"1E-{dp_of_mean}"
+
+        possible_match = (num_fractions_in_mean*fraction).quantize(Decimal(quantize_exp), rounding=rounding_method)
+
+        return possible_match == mean
