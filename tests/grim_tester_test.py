@@ -23,11 +23,16 @@ def test_simple_no_rounding(mean, n, expected_consistency):
 
 
 @pytest.mark.parametrize("mean, n, expected_consistency", [
-        ('11.67', '3', True),
-        ('11.09', '21', False),
-        ('11.09', '22', True),
-        ('11.09', '23', True),
-        ('1133.98', '28', False)
+    ('11.67', '3', True),
+    ('11.09', '21', False),
+    ('11.09', '22', True),
+    ('11.09', '23', True),
+    ('133.98', '28', False),
+    ('-11.67', '3', True),
+    ('-11.09', '21', False),
+    ('-11.09', '22', True),
+    ('-11.09', '23', True),
+    ('-133.98', '28', False)
 ])
 def test_simple_rounding_half_up(mean, n, expected_consistency):
 
@@ -38,10 +43,14 @@ def test_simple_rounding_half_up(mean, n, expected_consistency):
 
 
 @pytest.mark.parametrize("mean, n, expected_consistency", [
-        ('11.67', '3', True),
-        ('11.09', '21', False),
-        ('11.09', '22', True),
-        ('1133.98', '28', False)
+    ('11.67', '3', True),
+    ('11.09', '21', False),
+    ('11.09', '22', True),
+    ('133.98', '28', False),
+    ('-11.67', '3', True),
+    ('-11.09', '21', False),
+    ('-11.09', '22', True),
+    ('-133.98', '28', False)
 ])
 def test_simple_rounding_half_down(mean, n, expected_consistency):
 
