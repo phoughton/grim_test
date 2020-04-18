@@ -2,7 +2,7 @@ import decimal
 from decimal import Decimal
 
 
-def consistency_check(raw_mean, raw_n, rounding_method=decimal.ROUND_HALF_UP):
+def consistency_check(raw_mean, raw_n, rounding_method=None):
 
     mean = Decimal(raw_mean)
     n = Decimal(raw_n)
