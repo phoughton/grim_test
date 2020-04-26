@@ -1,16 +1,16 @@
 import pytest
-from grim import grim_tester
+from grim import mean_tester
 import decimal
 
 
 def check_consistency(mean, n, expected_consistency, rounding_type):
-    calculated_consistency = grim_tester.consistency_check(mean, n, rounding_type)
+    calculated_consistency = mean_tester.consistency_check(mean, n, rounding_type)
     assert calculated_consistency == expected_consistency, \
         f"The calculated score was: {calculated_consistency}, the expected score: {expected_consistency}. " + \
         f"The mean was: {mean} and the population size (n) was: {n}. (Passed as strings). " + \
         f"The rounding type was ${rounding_type}.  "
 
-    calculated_consistency = grim_tester.consistency_check(decimal.Decimal(mean), decimal.Decimal(n), rounding_type)
+    calculated_consistency = mean_tester.consistency_check(decimal.Decimal(mean), decimal.Decimal(n), rounding_type)
     assert calculated_consistency == expected_consistency, \
         f"The calculated score was: {calculated_consistency}, the expected score: {expected_consistency}. " + \
         f"The mean was: {mean} and the population size (n) was: {n}.  (Passed as Decimals). " + \
@@ -31,7 +31,7 @@ def check_consistency(mean, n, expected_consistency, rounding_type):
 ])
 def test_simple_no_rounding(mean, n, expected_consistency):
 
-    calculated_consistency = grim_tester.consistency_check(mean, n)
+    calculated_consistency = mean_tester.consistency_check(mean, n)
     assert calculated_consistency == expected_consistency, \
         f"The calculated score was: {calculated_consistency}, the expected score: {expected_consistency}. " + \
         f"The mean was: {mean} and the population size (n) was: {n}"

@@ -1,5 +1,5 @@
 import pytest
-from grim import grim_tester
+from grim import mean_tester
 import decimal
 
 
@@ -11,7 +11,7 @@ import decimal
 def test_n_value_exceptions_for_negatives(mean, n):
 
     with pytest.raises(ValueError, match=r".*greater than zero.*"):
-        grim_tester.consistency_check(mean, n)
+        mean_tester.consistency_check(mean, n)
 
 
 @pytest.mark.parametrize("mean, n", [
@@ -23,5 +23,5 @@ def test_n_value_exceptions_for_negatives(mean, n):
 def test_n_value_exceptions_for_integer(mean, n):
 
     with pytest.raises(ValueError, match=r".*whole number.*"):
-        grim_tester.consistency_check(mean, n)
+        mean_tester.consistency_check(mean, n)
 
