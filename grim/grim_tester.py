@@ -3,8 +3,16 @@ from decimal import Decimal
 
 
 def consistency_check(raw_mean, raw_n, rounding_method=None):
-    mean = Decimal(raw_mean)
-    n = Decimal(raw_n)
+
+    if isinstance(raw_mean, Decimal):
+        mean = raw_mean
+    else:
+        mean = Decimal(raw_mean)
+
+    if isinstance(raw_n, Decimal):
+        n = raw_n
+    else:
+        n = Decimal(raw_n)
 
     if n <= Decimal('0'):
         raise ValueError("n must be greater than zero")
