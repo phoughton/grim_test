@@ -3,6 +3,14 @@ from grim import grim_tester
 import decimal
 
 
+def check_consistency(mean, n, expected_consistency, rounding_type):
+    calculated_consistency = grim_tester.consistency_check(mean, n, rounding_type)
+    assert calculated_consistency == expected_consistency, \
+        f"The calculated score was: {calculated_consistency}, the expected score: {expected_consistency}. " + \
+        f"The mean was: {mean} and the population size (n) was: {n}. " + \
+        f"The rounding type was ${rounding_type}.  "
+
+
 @pytest.mark.parametrize("mean, n, expected_consistency", [
         ('10.00', '2', True),
         ('11.10', '19', False),
@@ -39,10 +47,7 @@ def test_simple_no_rounding(mean, n, expected_consistency):
 ])
 def test_simple_rounding_half_up(mean, n, expected_consistency):
 
-    calculated_consistency = grim_tester.consistency_check(mean, n, decimal.ROUND_HALF_UP)
-    assert calculated_consistency == expected_consistency, \
-        f"The calculated score was: {calculated_consistency}, the expected score: {expected_consistency}. " + \
-        f"The mean was: {mean} and the population size (n) was: {n}"
+    check_consistency(mean, n, expected_consistency, decimal.ROUND_HALF_UP)
 
 
 @pytest.mark.parametrize("mean, n, expected_consistency", [
@@ -60,10 +65,7 @@ def test_simple_rounding_half_up(mean, n, expected_consistency):
 ])
 def test_simple_rounding_half_down(mean, n, expected_consistency):
 
-    calculated_consistency = grim_tester.consistency_check(mean, n, decimal.ROUND_HALF_DOWN)
-    assert calculated_consistency == expected_consistency, \
-        f"The calculated score was: {calculated_consistency}, the expected score: {expected_consistency}. " + \
-        f"The mean was: {mean} and the population size (n) was: {n}"
+    check_consistency(mean, n, expected_consistency, decimal.ROUND_HALF_DOWN)
 
 
 @pytest.mark.parametrize("mean, n, expected_consistency", [
@@ -81,10 +83,7 @@ def test_simple_rounding_half_down(mean, n, expected_consistency):
 ])
 def test_simple_rounding_ceiling(mean, n, expected_consistency):
 
-    calculated_consistency = grim_tester.consistency_check(mean, n, decimal.ROUND_CEILING)
-    assert calculated_consistency == expected_consistency, \
-        f"The calculated score was: {calculated_consistency}, the expected score: {expected_consistency}. " + \
-        f"The mean was: {mean} and the population size (n) was: {n}"
+    check_consistency(mean, n, expected_consistency, decimal.ROUND_CEILING)
 
 
 @pytest.mark.parametrize("mean, n, expected_consistency", [
@@ -103,10 +102,7 @@ def test_simple_rounding_ceiling(mean, n, expected_consistency):
 ])
 def test_simple_rounding_floor(mean, n, expected_consistency):
 
-    calculated_consistency = grim_tester.consistency_check(mean, n, decimal.ROUND_FLOOR)
-    assert calculated_consistency == expected_consistency, \
-        f"The calculated score was: {calculated_consistency}, the expected score: {expected_consistency}. " + \
-        f"The mean was: {mean} and the population size (n) was: {n}"
+    check_consistency(mean, n, expected_consistency, decimal.ROUND_FLOOR)
 
 
 @pytest.mark.parametrize("mean, n, expected_consistency", [
@@ -127,7 +123,28 @@ def test_simple_rounding_floor(mean, n, expected_consistency):
 ])
 def test_simple_rounding_05up(mean, n, expected_consistency):
 
-    calculated_consistency = grim_tester.consistency_check(mean, n, decimal.ROUND_05UP)
-    assert calculated_consistency == expected_consistency, \
-        f"The calculated score was: {calculated_consistency}, the expected score: {expected_consistency}. " + \
-        f"The mean was: {mean} and the population size (n) was: {n}"
+    check_consistency(mean, n, expected_consistency, decimal.ROUND_05UP)
+
+
+@pytest.mark.parametrize("mean, n, expected_consistency", [
+    ('11.67', '3', True),
+    ('11.09', '21', False),
+    ('11.09', '22', True),
+    ('133.98', '28', False),
+    ('-11.67', '3', True),
+    ('-11.66', '3', False),
+    ('-11.6667', '3', True),
+    ('-11.6666', '3', False),
+    ('-11.09', '21', False),
+    ('-11.10', '200', True),
+    ('-11.09', '111', True),
+    ('-133.98', '28', False),
+    ('6.05', '121', True),
+    ('6.10', '121', True),
+    ('3.5', '9', False),
+    ('1.600', '2000', True)
+])
+def test_simple_rounding_half_even(mean, n, expected_consistency):
+
+    check_consistency(mean, n, expected_consistency, decimal.ROUND_HALF_EVEN)
+
