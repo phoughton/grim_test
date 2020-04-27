@@ -16,11 +16,11 @@ This implementation supports all the rounding types currently supported in Pytho
 
 ### Example:
 ```python
-import grim
+from grim import mean_tester
 import decimal
 
 # mean is 11.09 and n is 21
-print(grim.mean_tester.consistency_check('11.09', '21', decimal.ROUND_HALF_UP))
+print(mean_tester.consistency_check('11.09', '21', decimal.ROUND_HALF_UP))
 ```
 This will return `False` as the mean could not be correct given a list of 21 integers (and using ROUND_HALF_UP rounding.)
 
