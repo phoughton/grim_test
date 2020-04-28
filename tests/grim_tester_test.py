@@ -18,18 +18,20 @@ def check_consistency(mean, n, expected_consistency, rounding_type):
 
 
 @pytest.mark.parametrize("mean, n, expected_consistency", [
-        ('10.00', '2', True),
-        ('11.10', '19', False),
-        ('11.10', '20', True),
-        ('11.10', '21', False),
-        ('234567.3333', '3', False),
-        ('1133.98', '28', False),
-        ('11.09', '21', False),
-        ('11.09', '22', False),
-        ('11.09', '23', False),
-        ('11.67', '3', False)
+    ('11.67', '3', True),
+    ('11.09', '21', False),
+    ('11.09', '22', True),
+    ('11.09', '23', True),
+    ('0.3333333333333', '9', True),
+    ('133.98', '28', False),
+    ('-11.67', '3', True),
+    ('-11.66', '3', False),
+    ('-11.09', '21', False),
+    ('-11.09', '22', True),
+    ('-11.09', '23', True),
+    ('-133.98', '28', False)
 ])
-def test_simple_no_rounding(mean, n, expected_consistency):
+def test_simple_no_rounding_defined(mean, n, expected_consistency):
 
     calculated_consistency = mean_tester.consistency_check(mean, n)
     assert calculated_consistency == expected_consistency, \

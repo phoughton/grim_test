@@ -16,7 +16,7 @@ Often the 'mean' you are testing has previously been rounded. You can check if t
 This implementation supports all the rounding types currently found in Python 3.8's `decimal` implementation.
 (They are: ROUND_CEILING, ROUND_DOWN, ROUND_FLOOR¶, ROUND_HALF_DOWN, ROUND_HALF_EVEN, ROUND_HALF_UP, ROUND_UP, ROUND_05UP)
 
-If no rounding type is included then the test assumes the it should look for exact matches.
+If no rounding type is included then the test assumes the it should use ROUND_HALF_UP.
 
 ### Example:
 ```python
