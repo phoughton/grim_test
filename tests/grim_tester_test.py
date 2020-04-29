@@ -7,13 +7,13 @@ def check_consistency(mean, n, expected_consistency, rounding_type):
     calculated_consistency = mean_tester.consistency_check(mean, n, rounding_type)
     assert calculated_consistency == expected_consistency, \
         f"The calculated score was: {calculated_consistency}, the expected score: {expected_consistency}. " + \
-        f"The mean was: {mean} and the population size (n) was: {n}. (Passed as strings). " + \
+        f"The mean was: {mean} and the population size (n) was: {n}. (Passed as Decimals). " + \
         f"The rounding type was ${rounding_type}.  "
 
     calculated_consistency = mean_tester.consistency_check(decimal.Decimal(mean), decimal.Decimal(n), rounding_type)
     assert calculated_consistency == expected_consistency, \
         f"The calculated score was: {calculated_consistency}, the expected score: {expected_consistency}. " + \
-        f"The mean was: {mean} and the population size (n) was: {n}.  (Passed as Decimals). " + \
+        f"The mean was: {mean} and the population size (n) was: {n}.  (Passed as strings). " + \
         f"The rounding type was ${rounding_type}.  "
 
 

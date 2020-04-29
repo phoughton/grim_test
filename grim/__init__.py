@@ -1,4 +1,4 @@
-import mean_tester
+import grim.mean_tester
 
 __all__ = ["mean_tester"]
 
