@@ -55,7 +55,7 @@ def test_simple__consistent(mean_data):
                       mean_data['samples'])
 
 
-def test_simple_rounding_half_up__inconsistent(mean_data):
+def test_simple__inconsistent(mean_data):
 
     check_consistency(mean_data['rounded_mean'] + Decimal('0.001'),
                       len(mean_data['samples']),
