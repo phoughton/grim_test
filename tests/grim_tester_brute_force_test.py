@@ -57,50 +57,16 @@ def test_simple__consistent(mean_data):
 
 def test_simple__inconsistent(mean_data):
 
-    check_consistency(mean_data['rounded_mean'] + Decimal('0.001'),
-                      len(mean_data['samples']),
-                      False,
-                      mean_data['rounding_type'],
-                      mean_data['samples'])
+    offsets = ['0.001', '-0.001',
+               '0.002', '-0.002',
+               '0.003', '-0.003',
+               '0.004', '-0.004',
+               '0.005', '-0.005'
+               ]
 
-    check_consistency(mean_data['rounded_mean'] + Decimal('-0.001'),
-                      len(mean_data['samples']),
-                      False,
-                      mean_data['rounding_type'],
-                      mean_data['samples'])
-
-    check_consistency(mean_data['rounded_mean'] + Decimal('0.002'),
-                      len(mean_data['samples']),
-                      False,
-                      mean_data['rounding_type'],
-                      mean_data['samples'])
-
-    check_consistency(mean_data['rounded_mean'] + Decimal('-0.002'),
-                      len(mean_data['samples']),
-                      False,
-                      mean_data['rounding_type'],
-                      mean_data['samples'])
-
-    check_consistency(mean_data['rounded_mean'] + Decimal('0.003'),
-                      len(mean_data['samples']),
-                      False,
-                      mean_data['rounding_type'],
-                      mean_data['samples'])
-
-    check_consistency(mean_data['rounded_mean'] + Decimal('-0.003'),
-                      len(mean_data['samples']),
-                      False,
-                      mean_data['rounding_type'],
-                      mean_data['samples'])
-
-    check_consistency(mean_data['rounded_mean'] + Decimal('0.004'),
-                      len(mean_data['samples']),
-                      False,
-                      mean_data['rounding_type'],
-                      mean_data['samples'])
-
-    check_consistency(mean_data['rounded_mean'] + Decimal('-0.004'),
-                      len(mean_data['samples']),
-                      False,
-                      mean_data['rounding_type'],
-                      mean_data['samples'])
+    for offset in offsets:
+        check_consistency(mean_data['rounded_mean'] + Decimal(offset),
+                          len(mean_data['samples']),
+                          False,
+                          mean_data['rounding_type'],
+                          mean_data['samples'])
