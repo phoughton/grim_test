@@ -3,6 +3,18 @@ from decimal import Decimal
 
 
 def consistency_check(raw_mean, raw_n, rounding_method=decimal.ROUND_HALF_UP):
+    """
+    Returns whether the given raw_mean is consistent with the n value and rounding type provided.
+    Details of the technique: https://en.wikipedia.org/wiki/GRIM_test
+
+    :param raw_mean: A string or decimal value for the mean
+
+    :param raw_n: A string or decimal value for n (the number integer values/sample size)
+
+    :param rounding_method: One of the several rounding types supported by decimal, defaults to ROUND_HALF_UP
+
+    :return: A boolean indicating if the above values are consistent.
+    """
 
     if isinstance(raw_mean, Decimal):
         mean = raw_mean
