@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="grim",
-    version="0.0.6",
+    version="0.0.7",
     author="Peter Houghton",
     author_email="pete@investigatingsoftware.co.uk",
     description="An implementation of the GRIM test, in Python",
