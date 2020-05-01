@@ -19,3 +19,7 @@ mean,n,ROUND_CEILING,ROUND_DOWN,ROUND_FLOOR,ROUND_HALF_DOWN,ROUND_HALF_EVEN,ROUN
 """3.5""","""9""",True,True,True,False,False,False,True,False
 """1.600""","""2000""",True,True,True,True,True,True,True,True
 """56.567""","""8""",False,False,False,False,False,False,False,False
+"""18""","""7""",True,True,True,True,True,True,True,True
+"""1""","""345""",True,True,True,True,True,True,True,True
+"""14""","""3""",True,True,True,True,True,True,True,True
+"""14.0""","""3""",True,True,True,True,True,True,True,True
