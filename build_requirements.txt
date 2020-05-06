@@ -3,3 +3,5 @@ setuptools
 wheel
 twine
 pandas
+matplotlib
+seaborn
