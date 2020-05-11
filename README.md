@@ -49,7 +49,23 @@ You can pass in the numbers as Strings or Decimals, this avoids floating point a
 ## Warning:
 
 1. Beware of creating Decimals from floating point numbers as these may have floating point inaccuracies.
+e.g.:
+```python
+import decimal
 
+print(decimal.Decimal(1.1))
+1.100000000000000088817841970012523233890533447265625
+```
+Notice how the inaccurate representation of 1.1 from the floating point number has been preserved in the Decimal. Its better to create a decimal from a String E.g.:
+```python
+import decimal
+
+print(decimal.Decimal('1.1'))
+1.1
+```
+Many tools can be configured to read in text [that might be a number] as a string with out parsing. Some tools, such as Webdriver, only return a string (Which is useful!)
+
+For more information on the origins of these issues in modern computer languages [read this](http://effbot.org/pyfaq/why-am-i-getting-strange-results-with-simple-arithmetic-operations.htm).
 
 ## How can I find out more about the GRIM test?
 James Heathers has published [articles](https://medium.com/@jamesheathers/the-grim-test-a-method-for-evaluating-published-research-9a4e5f05e870) that explain how the technique works and how he used it to expose inconsistencies in scientific papers.
