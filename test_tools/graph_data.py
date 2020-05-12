@@ -10,20 +10,50 @@ x = []
 y = []
 z = []
 
-for decimal_number in range(0, 100):
-    for sample_size in range(1, 100):
-        mean = f"0.{decimal_number:02d}"
 
-        x.append(sample_size)
-        y.append(float(mean))
-        if mean_tester.consistency_check(mean, Decimal(sample_size)):
-            z.append(1)
-        else:
-            z.append(0)
+def draw_graph(raw_x, raw_y):
 
-results = pd.DataFrame({'x': x, 'y': y, 'z': z})
-pivotted = results.pivot('y', 'x', 'z')
-ax = sns.heatmap(pivotted, cmap='coolwarm', xticklabels=1, yticklabels=5, cbar=False, )
-ax.invert_yaxis()
-ax.set(xlabel="Sample Size", ylabel="Mean (between 0 and 1)")
-plt.show()
+    marker_y = int(100*(float(raw_y) % 1))
+    marker_x = int(raw_x)
+
+    for decimal_number in range(0, 100):
+        for sample_size in range(1, 101):
+            mean = f"0.{decimal_number:02d}"
+
+            x.append(sample_size)
+            y.append(float(mean))
+            if mean_tester.consistency_check(mean, Decimal(sample_size)):
+                z.append(1)
+            else:
+                z.append(0)
+
+    results = pd.DataFrame({'x': x, 'y': y, 'z': z})
+    print(results.head(1000).tail())
+    pivotted = results.pivot('y', 'x', 'z')
+    print(pivotted.head(1000).tail())
+
+    ax = sns.heatmap(pivotted, cmap=sns.color_palette(["#888888", "#0000FF"]), xticklabels=1, yticklabels=2, cbar=False, linewidths=0.005, linecolor='white')
+    ax.invert_yaxis()
+    ax.set(xlabel="Sample Size      (Blue=Consistent  Grey=Inconsistent)", ylabel="Mean (between 0 and 1)")
+    ax.scatter(marker_x, marker_y, color="red", marker="+")
+    ax.scatter(marker_x, marker_y+1, color="red", marker="+")
+    ax.scatter(marker_x-1, marker_y, color="red", marker="+")
+    ax.scatter(marker_x-1, marker_y+1, color="red", marker="+")
+
+    # for x_pos in [marker_x, marker_x-1]:
+    #     for y_pos in range(0, marker_y):
+    #         ax.scatter(x_pos, y_pos, color="green", marker="+")
+    #
+    # for y_pos in [marker_y, marker_y+1]:
+    #     for x_pos in range(0, marker_x-1):
+    #         ax.scatter(x_pos, y_pos, color="green", marker="+")
+    ax.hlines([marker_y], xmax=marker_x-1, xmin=0)
+    ax.vlines([marker_x], ymax=marker_y, ymin=0)
+    ax.hlines([marker_y+1], xmax=marker_x-1, xmin=0)
+    ax.vlines([marker_x-1], ymax=marker_y, ymin=0)
+    print(f"Markers. X: {marker_x}, Y: {marker_y}")
+    print(mean_tester.consistency_check((Decimal(raw_y) % 1), raw_x))
+    plt.show()
+
+
+draw_graph('20', '1.28')
