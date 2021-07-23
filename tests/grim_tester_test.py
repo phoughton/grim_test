@@ -18,13 +18,22 @@ TEST_DATA_FILE = "grim_test_data.csv"
 
 
 def check_consistency(mean, n, expected_consistency, rounding_type):
+
+    # Firstly with the default, no debug
     calculated_consistency = mean_tester.consistency_check(mean, n, rounding_type)
     assert calculated_consistency == expected_consistency, \
         f"The calc consistency was: {calculated_consistency}, the expected consistency: {expected_consistency}. " + \
         f"The mean was: {mean} and the population size (n) was: {n}. (Passed as Decimals). " + \
         f"The rounding type was {rounding_type}.  "
 
-    expected_consistency = mean_tester.consistency_check(decimal.Decimal(mean), decimal.Decimal(n), rounding_type)
+    # Then with debug
+    calculated_consistency = mean_tester.consistency_check(mean, n, rounding_type, True)
+    assert calculated_consistency == expected_consistency, \
+        f"The calc consistency was: {calculated_consistency}, the expected consistency: {expected_consistency}. " + \
+        f"The mean was: {mean} and the population size (n) was: {n}. (Passed as Decimals). " + \
+        f"The rounding type was {rounding_type}.  "
+
+    expected_consistency = mean_tester.consistency_check(decimal.Decimal(mean), decimal.Decimal(n), rounding_type, True)
     assert calculated_consistency == expected_consistency, \
         f"The calc consistency: {calculated_consistency}, the expected consistency: {expected_consistency}. " + \
         f"The mean was: {mean} and the population size (n) was: {n}.  (Passed as strings). " + \
@@ -53,9 +62,7 @@ def data_loader():
 
 
 def test__csv(data_loader):
-    print(data_loader)
     for data_set in data_loader:
-        print(data_set)
         check_consistency(data_set["mean"],
                           data_set["n"],
                           data_set["expected_consistency"],

@@ -1,8 +1,6 @@
 # The GRIM test 
 _An implementation of the GRIM test, in python_
 
-*Beta: Work in progress*
-
 ## Introduction
 This package is based on the GRIM (Granularity-Related Inconsistency of Means) test first highlighted by Heathers & Brown in their 2016 paper.
 
@@ -19,6 +17,19 @@ This implementation supports all the rounding types currently found in Python 3.
 (They are: ROUND_CEILING, ROUND_DOWN, ROUND_FLOOR, ROUND_HALF_DOWN, ROUND_HALF_EVEN, ROUND_HALF_UP, ROUND_UP, ROUND_05UP)
 
 If no rounding type is included then the test assumes ROUND_HALF_UP.
+
+
+### How do I install it?
+
+On the command line:
+```bash
+pip install grim
+```
+
+In a google Colab/iPython notebook:
+```bash
+!pip install grim
+```
 
 ### Example: Is this _mean_, _n_ and rounding type consistent?
 ```python
@@ -46,7 +57,14 @@ As you can see, a given mean and n might be consistent using one form of roundin
 
 You can pass in the numbers as Strings or Decimals, this avoids floating point accuracy issues that are more likely to occur when using a 'float'.
 
-## Warning:
+# How do I see some logging about how the possible matches the algorithm has considered?
+
+Add an extra argument,  `True`.
+```python
+print(mean_tester.summary_consistency_check('11.09', '21', True))
+```
+
+## A warning about floating point numbers & computers:
 
 1. Beware of creating Decimals from floating point numbers as these may have floating point inaccuracies.
 e.g.:

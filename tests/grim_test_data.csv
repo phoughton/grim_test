@@ -23,3 +23,5 @@ mean,n,ROUND_CEILING,ROUND_DOWN,ROUND_FLOOR,ROUND_HALF_DOWN,ROUND_HALF_EVEN,ROUN
 """1""","""345""",True,True,True,True,True,True,True,True
 """14""","""3""",True,True,True,True,True,True,True,True
 """14.0""","""3""",True,True,True,True,True,True,True,True
+"""15.7""","""12""",True,True,True,True,True,True,True,True
+"""15.70""","""12""",False,False,False,False,False,False,False,False

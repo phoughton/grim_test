@@ -1,5 +1,6 @@
 import decimal
 from decimal import Decimal
+from time import gmtime, strftime
 
 rounding_types = ["ROUND_CEILING",
                   "ROUND_DOWN",
@@ -10,8 +11,11 @@ rounding_types = ["ROUND_CEILING",
                   "ROUND_UP",
                   "ROUND_05UP"]
 
+def log(log_debug, msg):
+    if log_debug:
+        print(strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime()) + " : " + str(msg))
 
-def summary_consistency_check(raw_mean, raw_n):
+def summary_consistency_check(raw_mean, raw_n, log_status=False):
     """
     Returns a summary of whether a given mean and and n value is consistent across a range
     of rounding types.
@@ -20,16 +24,18 @@ def summary_consistency_check(raw_mean, raw_n):
 
     :param raw_n: A string or decimal value for n (the number integer values/sample size)
 
+    :param log_status: Optional, Defaults to False, outputs extra info regarding matches.
+
     :return: A dict containing rounding types (as keys) and whether the mean is consistent.
     """
     summary = {}
     for rounding_type in rounding_types:
-        summary[rounding_type] = consistency_check(raw_mean, raw_n, rounding_method=getattr(decimal, rounding_type))
+        summary[rounding_type] = consistency_check(raw_mean, raw_n, rounding_method=getattr(decimal, rounding_type), log_status=log_status)
 
     return summary
 
 
-def consistency_check(raw_mean, raw_n, rounding_method=decimal.ROUND_HALF_UP):
+def consistency_check(raw_mean, raw_n, rounding_method=decimal.ROUND_HALF_UP, log_status=False):
     """
     Returns whether the given raw_mean is consistent with the n value and rounding type provided.
     Details of the technique: https://en.wikipedia.org/wiki/GRIM_test
@@ -38,7 +44,9 @@ def consistency_check(raw_mean, raw_n, rounding_method=decimal.ROUND_HALF_UP):
 
     :param raw_n: A string or decimal value for n (the number integer values/sample size)
 
-    :param rounding_method: One of the several rounding types supported by decimal, defaults to ROUND_HALF_UP
+    :param rounding_method: Optional, defaults to ROUND_HALF_UP, One of the several rounding types supported by decimal, 
+
+    :param log_status: Optional, Defaults to False, outputs extra info regarding matches.
 
     :return: A boolean indicating if the above values are consistent.
     """
@@ -78,4 +86,14 @@ def consistency_check(raw_mean, raw_n, rounding_method=decimal.ROUND_HALF_UP):
     if mean < poss_match_lower:
         raise Exception('Mean less than expected low. Indicates code error.')
 
-    return mean in [poss_match_lower, poss_match_middle, poss_match_upper]
+    match_status = mean in [poss_match_lower, poss_match_middle, poss_match_upper]
+
+    log(log_status, "Target Mean: " + str(mean) 
+        + ", Decimal places: " + str(dp_of_mean)
+        + ", Lower match: " + str(poss_match_lower)
+        + ", Middle match: " + str(poss_match_middle)
+        + ", Upper match: " + str(poss_match_upper)
+        + ", Match status: " + str(match_status)
+        + ", Rounding method: " + str(rounding_method))
+
+    return match_status
