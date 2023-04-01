@@ -1,0 +1,62 @@
+name: Python CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8, 3.9]
+
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Cache Python dependencies
+      uses: actions/cache@v2
+      with:
+        path: venv
+        key: ${{ runner.os }}-venv-${{ hashFiles('requirements.txt') }}-${{ matrix.python-version }}
+        restore-keys: |
+          ${{ runner.os }}-venv-${{ matrix.python-version }}-
+
+    - name: Install dependencies
+      run: |
+        python3 -m venv venv
+        source venv/bin/activate
+        pip install -r build_requirements.txt
+
+    - name: Run tests
+      run: |
+        source venv/bin/activate
+        pwd
+        ls -l
+        python -m pytest -s
+
+    - name: Store test artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: test-reports-${{ matrix.python-version }}
+        path: test-reports
+
+    - name: Build package
+      if: github.ref == 'refs/heads/master'
+      run: |
+        python3 setup.py sdist bdist_wheel
+
+    - name: Upload package
+      if: github.ref == 'refs/heads/master'
+      run: |
+        echo "[pypi]" > ~/.pypirc
+        chmod 700 ~/.pypirc
+        echo "username: __token__" >> ~/.pypirc
+        echo "password: ${{ secrets.PYPI_LOGIN_TOKEN }}" >> ~/.pypirc
+        source venv/bin/activate
+        ls -lrt dist/
+        python3 -m twine upload --verbose --skip-existing dist/*
