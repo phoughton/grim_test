@@ -88,3 +88,6 @@ For more information on the origins of these issues in modern computer languages
 ## How can I find out more about the GRIM test?
 James Heathers has published [articles](https://medium.com/@jamesheathers/the-grim-test-a-method-for-evaluating-published-research-9a4e5f05e870) that explain how the technique works and how he used it to expose inconsistencies in scientific papers.
 
+## Citations?
+
+There is a [citation file](https://github.com/phoughton/grim_test/blob/master/CITATION.cff) included in the code repo.
