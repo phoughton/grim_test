@@ -1,0 +1,34 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: Grim Test
+message: >-
+  The test makes use of a simple numerical property to
+  identify if the mean of integer values has been correctly
+  calculated.
+type: software
+authors:
+  - given-names: Peter Johnathan
+    family-names: Houghton
+    email: pete@investigatingsoftware.co.uk
+repository-code: 'https://github.com/phoughton/grim_test'
+repository-artifact: 'https://pypi.org/project/grim/'
+abstract: >-
+  This package is based on the GRIM (Granularity-Related
+  Inconsistency of Means) test first highlighted by Heathers
+  & Brown in their 2016 paper.
+
+  The test makes use of a simple numerical property to
+  identify if the mean of integer values has been correctly
+  calculated.
+
+  You don't need the original integer values. You just need
+  the mean and the number (n) of items.
+keywords:
+  - grim
+  - statistics
+  - python
+  - mean
+  - average
+license: MIT
