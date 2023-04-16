@@ -26,7 +26,7 @@ On the command line:
 pip install grim
 ```
 
-In a google Colab/iPython notebook:
+In a google Colab/iPython/Jupyter notebook:
 ```bash
 !pip install grim
 ```

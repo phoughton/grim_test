@@ -29,7 +29,8 @@ def check_consistency_summary(mean, n, rounding_results):
             f"The mean was: {mean} and the population size (n) was: {n}. (Passed as Decimals). " + \
             f"The rounding type was {rounding_type}.  "
 
-        expect_consistency = mean_tester.consistency_check(decimal.Decimal(mean), decimal.Decimal(n), rounding_type)
+        expect_consistency = mean_tester.consistency_check(
+            decimal.Decimal(mean), decimal.Decimal(n), rounding_type)
         assert calc_consistency_summary[rounding_type] == expect_consistency, \
             f"The calc consistency: {calc_consistency_summary[rounding_type]}, " + \
             f"The expected consistency: {expect_consistency}. " + \

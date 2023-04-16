@@ -1,21 +1,39 @@
 import decimal
 from decimal import Decimal
 from time import gmtime, strftime
+from typing import Union, Dict, List
 
-rounding_types = ["ROUND_CEILING",
-                  "ROUND_DOWN",
-                  "ROUND_FLOOR",
-                  "ROUND_HALF_DOWN",
-                  "ROUND_HALF_EVEN",
-                  "ROUND_HALF_UP",
-                  "ROUND_UP",
-                  "ROUND_05UP"]
 
-def log(log_debug, msg):
+rounding_types: List[str] = ["ROUND_CEILING",
+                             "ROUND_DOWN",
+                             "ROUND_FLOOR",
+                             "ROUND_HALF_DOWN",
+                             "ROUND_HALF_EVEN",
+                             "ROUND_HALF_UP",
+                             "ROUND_UP",
+                             "ROUND_05UP"]
+
+
+
+def _log(log_debug: bool, msg: str):
+    """
+    This function logs a message with a timestamp if the log_debug flag is set to True.
+
+    Args:
+    log_debug (bool): A flag to indicate whether the message should be logged or not. If set to True, the message will be logged with a timestamp. If set to False, the function will do nothing.
+    msg (str): The message to be logged.
+
+    Example:
+    log(True, "This is a debug message")
+
+    Output:
+    "Sun, 16 Apr 2023 15:30:00 +0000 : This is a debug message"
+    """
     if log_debug:
         print(strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime()) + " : " + str(msg))
 
-def summary_consistency_check(raw_mean, raw_n, log_status=False):
+
+def summary_consistency_check(raw_mean: Union[str, Decimal], raw_n: Union[str, Decimal], log_status: bool = False) -> Dict[str, bool]:
     """
     Returns a summary of whether a given mean and and n value is consistent across a range
     of rounding types.
@@ -35,7 +53,10 @@ def summary_consistency_check(raw_mean, raw_n, log_status=False):
     return summary
 
 
-def consistency_check(raw_mean, raw_n, rounding_method=decimal.ROUND_HALF_UP, log_status=False):
+def consistency_check(raw_mean: Union[str, Decimal],
+                      raw_n: Union[str, Decimal],
+                      rounding_method: str = decimal.ROUND_HALF_UP,
+                      log_status: bool = False) -> bool:
     """
     Returns whether the given raw_mean is consistent with the n value and rounding type provided.
     Details of the technique: https://en.wikipedia.org/wiki/GRIM_test
@@ -88,7 +109,7 @@ def consistency_check(raw_mean, raw_n, rounding_method=decimal.ROUND_HALF_UP, lo
 
     match_status = mean in [poss_match_lower, poss_match_middle, poss_match_upper]
 
-    log(log_status, "Target Mean: " + str(mean) 
+    _log(log_status, "Target Mean: " + str(mean) 
         + ", Decimal places: " + str(dp_of_mean)
         + ", Lower match: " + str(poss_match_lower)
         + ", Middle match: " + str(poss_match_middle)
