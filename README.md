@@ -12,9 +12,11 @@ You don't need the original integer values. You just need the _mean_ and the num
 
 Often the _mean_ you are testing has previously been rounded. You can check if the _mean_ is consistent with a particular rounding type by including that as an argument.
 
-This implementation supports all the rounding types currently found in Python 3.8's `decimal` [implementation](https://docs.python.org/3/library/decimal.html).
+This implementation supports all the rounding types found in the Python `decimal` [implementation](https://docs.python.org/3/library/decimal.html) (at least between versiuons 3.8 and 3.11).
 
-(They are: ROUND_CEILING, ROUND_DOWN, ROUND_FLOOR, ROUND_HALF_DOWN, ROUND_HALF_EVEN, ROUND_HALF_UP, ROUND_UP, ROUND_05UP)
+
+*(They are: ROUND_CEILING, ROUND_DOWN, ROUND_FLOOR, ROUND_HALF_DOWN, ROUND_HALF_EVEN, ROUND_HALF_UP, ROUND_UP, ROUND_05UP)*
+
 
 If no rounding type is included then the test assumes ROUND_HALF_UP.
 
