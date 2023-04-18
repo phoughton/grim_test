@@ -59,30 +59,48 @@ As you can see, a given mean and n might be consistent using one form of roundin
 
 You can pass in the numbers as Strings or Decimals, this avoids floating point accuracy issues that are more likely to occur when using a 'float'.
 
-# How do I see some logging about how the possible matches the algorithm has considered?
+## How do I see some logging about how the possible matches the algorithm has considered?
 
-Add an extra argument,  `True`.
+Add an extra argument,  `log_status=True`.
 ```python
-print(mean_tester.summary_consistency_check('11.09', '21', True))
+print(mean_tester.summary_consistency_check('11.09', '21', log_status=True))
+```
+
+The output would look this:
+```
+Tue, 18 Apr 2023 18:02:00 +0000 : Target Mean: 11.09, Decimal places: 2, Lower match: 11.00, Middle match: 11.05, Upper match: 11.10, Match status: False, Rounding method: ROUND_CEILING
+Tue, 18 Apr 2023 18:02:00 +0000 : Target Mean: 11.09, Decimal places: 2, Lower match: 11.00, Middle match: 11.04, Upper match: 11.09, Match status: True, Rounding method: ROUND_DOWN
+Tue, 18 Apr 2023 18:02:00 +0000 : Target Mean: 11.09, Decimal places: 2, Lower match: 11.00, Middle match: 11.04, Upper match: 11.09, Match status: True, Rounding method: ROUND_FLOOR
+Tue, 18 Apr 2023 18:02:00 +0000 : Target Mean: 11.09, Decimal places: 2, Lower match: 11.00, Middle match: 11.05, Upper match: 11.10, Match status: False, Rounding method: ROUND_HALF_DOWN
+Tue, 18 Apr 2023 18:02:00 +0000 : Target Mean: 11.09, Decimal places: 2, Lower match: 11.00, Middle match: 11.05, Upper match: 11.10, Match status: False, Rounding method: ROUND_HALF_EVEN
+Tue, 18 Apr 2023 18:02:00 +0000 : Target Mean: 11.09, Decimal places: 2, Lower match: 11.00, Middle match: 11.05, Upper match: 11.10, Match status: False, Rounding method: ROUND_HALF_UP
+Tue, 18 Apr 2023 18:02:00 +0000 : Target Mean: 11.09, Decimal places: 2, Lower match: 11.00, Middle match: 11.05, Upper match: 11.10, Match status: False, Rounding method: ROUND_UP
+Tue, 18 Apr 2023 18:02:00 +0000 : Target Mean: 11.09, Decimal places: 2, Lower match: 11.00, Middle match: 11.04, Upper match: 11.09, Match status: True, Rounding method: ROUND_05UP
+{'ROUND_CEILING': False, 'ROUND_DOWN': True, 'ROUND_FLOOR': True, 'ROUND_HALF_DOWN': False, 'ROUND_HALF_EVEN': False, 'ROUND_HALF_UP': False, 'ROUND_UP': False, 'ROUND_05UP': True}
 ```
 
 ## A warning about floating point numbers & computers:
 
-1. Beware of creating Decimals from floating point numbers as these may have floating point inaccuracies.
+Beware of creating Decimals from floating point numbers as these may have floating point inaccuracies.
+
 e.g.:
+
 ```python
 import decimal
 
 print(decimal.Decimal(1.1))
 1.100000000000000088817841970012523233890533447265625
 ```
+
 Notice how the inaccurate representation of 1.1 from the floating point number has been preserved in the Decimal. Its better to create a decimal from a String E.g.:
+
 ```python
 import decimal
 
 print(decimal.Decimal('1.1'))
 1.1
 ```
+
 Many tools can be configured to read in text [that might be a number] as a string with out parsing. Some tools, such as Webdriver, only return a string (Which is useful!)
 
 For more information on the origins of these issues in modern computer languages [read this](http://effbot.org/pyfaq/why-am-i-getting-strange-results-with-simple-arithmetic-operations.htm).
