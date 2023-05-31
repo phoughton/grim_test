@@ -21,6 +21,9 @@ This implementation supports all the rounding types found in the Python `decimal
 If no rounding type is included then the test assumes ROUND_HALF_UP.
 
 
+**These examples are available as a [Google Colab Notebook](https://colab.research.google.com/drive/1TyHaCJNdDGyrWMNB-ea2axbWDnw8iiBu?usp=sharing)**
+
+
 ### How do I install it?
 
 On the command line:
